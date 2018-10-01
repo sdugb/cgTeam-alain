@@ -1,0 +1,72 @@
+
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzMd]="16">
+        <nz-card nzTitle="我的模版（总数：{{templateTotal}})">
+            <ng-template #extra>
+                <a (click)="onClickRefreshTemplate()">刷新</a>
+                <span nz-table-divider></span>
+                <a (click)="onClickCreateTemplate()">创建模版</a>
+            </ng-template>
+            <nz-table #nzTable [nzDataSource]="templateList" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr>
+                    <th nz-th nzExpand></th>
+                    <th nz-th><span>名称</span></th>
+                    <th nz-th><span>别名</span></th>
+                    <th nz-th><span>用户</span></th>
+                    <th nz-th><span>属性</span></th>
+                    <th nz-th><span>阶段</span></th>
+                    <th nz-th><span>动作</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <ng-template ngFor let-data [ngForOf]="templateList">
+                        <tr nz-tbody-tr>
+                            <td nz-td nzExpand>
+                                <nz-row-expand-icon [(nzExpand)]="data.expand"></nz-row-expand-icon>
+                            </td>
+                            <td nz-td>{{data.name}}</td>
+                            <td nz-td>{{data.alias}}</td>
+                            <td nz-td>{{data.user}}</td>
+                            <td nz-td>{{data.status}}</td>
+                            <td nz-td>{{data.stage}}</td>
+                            <td nz-td>
+                                <span *ngIf="!data.status">
+                                    <nz-popconfirm [nzTitle]="'确定要删除这个模版吗？'" (nzOnConfirm)="confirmTemplate(data)" (nzOnCancel)="cancelTemplate()">
+                                        <a nz-popconfirm>删除</a>
+                                    </nz-popconfirm>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr nz-tbody-tr *ngIf="data.expand">
+                            <td nz-td></td>
+                            <td nz-td colspan="4">
+                                {{data.description}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+
+                <!---
+                <tbody nz-tbody>
+                <tr nz-tbody-tr *ngFor="let data of templateList">
+                    <td nz-td>
+                        <a>{{data.name}}</a>
+                    </td>
+                    <td nz-td>{{data.alias}}</td>
+                    <td nz-td>{{data.stage}}</td>
+                    <td nz-td>
+                        <span>
+                            <nz-popconfirm [nzTitle]="'确定要删除这个模版吗？'" (nzOnConfirm)="confirmTemplate(data)" (nzOnCancel)="cancelTemplate()">
+                                <a nz-popconfirm>删除</a>
+                            </nz-popconfirm>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+                --->
+            </nz-table>
+        </nz-card>
+    </div>
+</div>
+

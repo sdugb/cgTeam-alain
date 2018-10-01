@@ -1,0 +1,61 @@
+{
+    "app": {
+        "name": "新视觉团队",
+        "description": "Ng-zorro admin panel front-end framework"
+    },
+    "user": {
+        "name": "Admin",
+        "avatar": "./assets/img/zorro.svg",
+        "email": "cipchk@qq.com"
+    },
+    "menu": [{
+        "text": "主导航",
+        "i18n": "main_navigation",
+        "group": true,
+        "children": [{
+            "text": "CGTeam",
+            "i18n": "function",
+            "link": "/function",
+            "icon": "icon-user",
+            "children": [{
+                "text": "我的项目",
+                "link": "/function/myProjects",
+                "icon": "icon-user",
+                "i18n": "myProjects"
+            },{
+                "text": "我的成员",
+                "link": "/function/myMembers",
+                "icon": "icon-user",
+                "i18n": "myMembers"
+            },{
+                "text": "我的任务",
+                "link": "/function/myTasks",
+                "icon": "icon-user",
+                "i18n": "myTasks"
+            },{
+                    "text": "我的审验",
+                    "link": "/function/myCheckinTasks",
+                    "icon": "icon-user",
+                    "i18n": "myCheckinTasks"
+                },{
+                "text": "完成任务",
+                "link": "/function/myFinishedTasks",
+                "icon": "icon-user",
+                "i18n": "myFinishedTasks"
+            },
+                {
+                "text": "我的渲染",
+                "link": "/function/myRenderTasks",
+                "icon": "icon-user",
+                "i18n": "myRenderTasks"
+            },{
+                "text": "我的软件",
+                "link": "/function/mySoftwares",
+                "icon": "icon-software",
+                "i18n": "mySoftwares"
+            }
+            ]
+        }]
+    }]
+
+}

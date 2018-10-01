@@ -1,0 +1,101 @@
+
+
+<!---
+<nz-card nzTitle="平台用户列表（总数：{{total}}）">
+    <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="10" nzShowSizeChanger>
+        <thead nz-thead>
+        <tr>
+            <th nz-th><span>账号</span></th>
+            <th nz-th><span>ID</span></th>
+            <th nz-th><span>实例数</span></th>
+            <th nz-th><span>上次登录时间</span></th>
+        </tr>
+        </thead>
+        <tbody nz-tbody>
+        <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+            <td nz-td>
+                <a>{{data.name}}</a>
+            </td>
+            <td nz-td>{{data.id}}</td>
+            <td nz-td>{{data.app_count}}</td>
+            <td nz-td>{{data.last_login_time}}</td>
+        </tr>
+        </tbody>
+    </nz-table>
+</nz-card>
+--->
+
+<div class="content__title">
+    <h1>
+        平台用户、实例列表
+    </h1>
+</div>
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzMd]="12">
+        <nz-card nzTitle="用户列表（总数：{{userTotal}})">
+            <nz-table #nzTable [nzDataSource]="userList" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr>
+                    <th nz-th><span>账号</span></th>
+
+                    <th nz-th><span>ID</span></th>
+                    <th nz-th><span>实例数</span>
+                        <nz-table-sort [(nzValue)]="sortMap.app_count" (nzValueChange)="sort_user('app_count',$event)">
+                        </nz-table-sort>
+                    </th>
+                    <th nz-th><span>上次登录时间</span></th>
+                    <th nz-th><span>动作</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                <tr nz-tbody-tr *ngFor="let data of userList">
+                    <td nz-td>
+                        <a>{{data.name}}</a>
+                    </td>
+                    <td nz-td>{{data.id}}</td>
+                    <td nz-td>{{data.app_count}}</td>
+                    <td nz-td>{{data.loginDate}}</td>
+                    <td nz-td>
+                            <span>
+                                <a (click)="onSelectUser(data)">选择</a>
+                                <span nz-table-divider></span>
+                                <nz-dropdown>
+                                    <a class="ant-dropdown-link" nz-dropdown>
+                                        更多<i class="anticon anticon-down"></i>
+                                    </a>
+                                    <ul nz-menu>
+                                        <li nz-menu-item>1st menu item</li>
+                                        <li nz-menu-item>2st menu item</li>
+                                        <li nz-menu-item>3st menu item</li>
+                                    </ul>
+                                </nz-dropdown>
+                            </span>
+                    </td>
+                </tr>
+                </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+    <div nz-col [nzMd]="12">
+        <nz-card nzTitle="实例列表（总数：{{appTotal}})">
+            <nz-table [nzDataSource]="appList" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr>
+                    <th nz-th><span>实例名</span></th>
+                    <th nz-th><span>作业数</span></th>
+                    <th nz-th><span>状态</span></th>
+                    <th nz-th><span>类型</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                <tr nz-tbody-tr *ngFor="let data of appList">
+                    <td nz-td>{{data.name}}</td>
+                    <td nz-td>{{data.job_count}}</td>
+                    <td nz-td>{{data.state}}</td>
+                    <td nz-td>{{data.type}}</td>
+                </tr>
+                </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+</div>

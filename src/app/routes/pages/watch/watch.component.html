@@ -1,0 +1,28 @@
+<!---
+<div>
+    <vg-player>
+        <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+            <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
+        </video>
+    </vg-player>
+</div>
+-->
+<div class="content__title">
+    <h1>
+        提交结果
+    </h1>
+</div>
+<div nz-row [nzGutter]="24">
+    <div nz-col [nzMd]="24">
+        <nz-card>
+            <ng-template #extra>
+                <a (click)="onClickBack()">退回</a>
+            </ng-template>
+            <video src="{{submitFile}}" controls="controls" autoplay="autoplay">
+                your browser does not support the video tag
+            </video>
+        </nz-card>
+    </div>
+</div>
+
+

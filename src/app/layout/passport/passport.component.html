@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="top">
+        <div class="head">
+            <a [routerLink]="['/']">
+                <span class="title">{{title}}</span>
+            </a>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+    <global-footer>
+        <ng-template #copyright>
+            Copyright <nz-icon nzType="copyright"></nz-icon> 2018 <a href="//" target="_blank">山东大学、数字媒体技术教育部工程研究中心</a>出品
+        </ng-template>
+    </global-footer>
+</div>

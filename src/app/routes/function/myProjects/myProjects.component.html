@@ -1,0 +1,222 @@
+<div nz-row [nzGutter]="24" *ngIf="projectFlag">
+    <div nz-col [nzMd]="24">
+        <nz-card nzTitle="我的项目（总数：{{projectTotal}})">
+            <ng-template #extra>
+                <a (click)="onClickCreateProject()">创建项目</a>
+                <span nz-table-divider></span>
+                <a (click)="onClickRefreshProject()">刷新</a>
+                <span nz-table-divider></span>
+                <label nz-checkbox [(ngModel)]="allProjectChecked" (click)="onClickProjectCheck()">全部</label>
+            </ng-template>
+                <nz-table [nzDataSource]="projectList" [nzPageSize]="10">
+                    <thead nz-thead>
+                        <tr>
+                            <th nz-th nzExpand></th>
+                            <th nz-th><span>名称</span></th>
+                            <th nz-th><span>模版</span></th>
+                            <th nz-th><span>设计工具</span></th>
+                            <th nz-th><span>渲染器</span></th>
+                            <th nz-th><span>任务数</span></th>
+                            <th nz-th><span>状态</span></th>
+                            <th nz-th><span>创建任务</span></th>
+                            <th nz-th><span>动作</span></th>
+
+                        </tr>
+                    </thead>
+                    <tbody nz-tbody>
+                        <ng-template ngFor let-data [ngForOf]="projectList">
+                            <tr>
+                                <td nz-td nzExpand>
+                                    <nz-row-expand-icon (click)="onClickExpandProject(data)"></nz-row-expand-icon>
+                                </td>
+                                <td nz-td>
+                                    <a>{{data.name}}</a>
+                                </td>
+                                <td nz-td>{{data.templateName}}</td>
+                                <td nz-td>{{data.designTool}}
+                                    <nz-dropdown [nzTrigger]="'click'">
+                                        <i class="anticon anticon-filter" nz-dropdown></i>
+                                        <ul nz-menu>
+                                            <li nz-menu-item *ngFor="let designTool of designToolList">
+                                                <span (click)="onClickDesignTool(data, designTool)">{{designTool.name}}</span>
+                                            </li>
+                                        </ul>
+                                    </nz-dropdown>
+                                </td>
+                                <td nz-td>{{data.render}}
+                                    <nz-dropdown [nzTrigger]="'click'">
+                                        <i class="anticon anticon-filter" nz-dropdown></i>
+                                        <ul nz-menu>
+                                            <li nz-menu-item *ngFor="let render of renderList">
+                                                <span (click)="onClickRender(data, render)">{{render.name}}</span>
+                                            </li>
+                                        </ul>
+                                    </nz-dropdown>
+                                </td>
+                                <td nz-td>{{data.taskCount}}({{data.taskFinishedCount}})</td>
+                                <td nz-td>{{data.enable}}</td>
+                                <td nz-td>
+                                    <a (click)="onCreateSingleTask(data.name)">单任务</a>
+                                    <span nz-table-divider></span>
+                                    <a *ngIf="data.templateName=='3DShot'" (click)="onCreateBatchTasks(data.name)">多任务</a>
+                                </td>
+                                <td nz-td *ngIf="data.enable">
+                                    <a (click)="onUnActivateProject(data)">冻结</a>
+                                    <span nz-table-divider></span>
+                                    <!---
+                                    <span>
+                                        <nz-popconfirm [nzTitle]="'确定要删除这个项目吗----？'" (nzOnConfirm)="confirmSubProject(data)" (nzOnCancel)="cancelSubProject()">
+                                            <a nz-popconfirm>删除</a>
+                                        </nz-popconfirm>
+                                    </span>
+                                    <span nz-table-divider></span>
+                                     ---->
+                                    <a *ngIf="data.templateName=='3DShot'" (click)="onExamineProject(data)">审查</a>
+                                    <span nz-table-divider></span>
+                                    <a (click)="onSelectProject(data)">选择</a>
+                                </td>
+
+                                <td nz-td *ngIf="!data.enable">
+                                    <a (click)="onActivateProject(data)">激活</a>
+                                    <span nz-table-divider></span>
+                                    <a *ngIf="data.templateName=='3DShot'" (click)="onExamineProject(data)">审查</a>
+                                    <span nz-table-divider></span>
+                                    <a (click)="onSelectProject(data)">选择</a>
+                                </td>
+                            </tr>
+                            <tr *ngIf="data.expand">
+                                <td></td>
+                                <td colspan="7">
+                                    <div>流程: {{data.templateStage}}</div>
+                                    <div>时间单位：{{data.timeUnit}}; 横向分辨率: {{data.xResolution}}; 纵向分辨率: {{data.yResolution}}</div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+</div>
+
+<div nz-row [nzGutter]="24" *ngIf="!projectFlag">
+    <div nz-col [nzMd]="24">
+        <nz-card nzTitle="{{taskTitle}}">
+            <ng-template #extra>
+                <a (click)="onCreateSingleTask2()">创建任务</a>
+                <span nz-table-divider></span>
+                <a (click)="onClickBack()">回退</a>
+            </ng-template>
+            <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr>
+                    <th nz-th nzExpand></th>
+                    <th nz-th><span>序号</span></th>
+                    <th nz-th><span>名称</span></th>
+                    <th nz-th><span>引用资产数</span></th>
+                    <th nz-th><span>帧序列</span></th>
+                    <th nz-th><span>阶段</span></th>
+                    <th nz-th><span>状态</span></th>
+                    <th nz-th><span>执行人</span></th>
+                    <th nz-th><span>审验人</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                <ng-template ngFor let-data [ngForOf]="nzTable.data">
+                    <tr nz-tbody-tr >
+                        <nz-popover [nzPlacement]="'left'">
+                            <td nz-td nz-popover class="centered"><img src="{{data.picValue}}" class="img-rounded">
+                                <ng-template #nzTemplate>
+                                    <img src="{{data.picValue}}" width="120" height="120">
+                                </ng-template>
+                            </td>
+                        </nz-popover>
+                        <td nz-td nzExpand>
+                            <nz-row-expand-icon (click)="onClickExpandTask(data.task)"></nz-row-expand-icon>
+                        </td>
+                        <td nz-td>{{data.task.name}}</td>
+                        <td nz-td>{{data.refCount}}
+
+                        </td>
+                        <td>
+                            <ng-container *ngIf="!data.editFlag">
+                                {{data.task.frameList}}
+                            </ng-container>
+                            <ng-container *ngIf="data.editFlag">
+                                <input type="text" nz-input [(ngModel)]="data.task.frameList">
+                            </ng-container>
+                        </td>
+                        <td nz-td>{{data.task.stage}}
+                            <nz-dropdown [nzTrigger]="'click'">
+                                <i class="anticon anticon-filter" nz-dropdown></i>
+                                <ul nz-menu>
+                                    <li nz-menu-item *ngFor="let stage of stageList">
+                                        <span (click)="onClickStage(data.task, stage)">{{stage}}</span>
+                                    </li>
+                                </ul>
+                            </nz-dropdown>
+                        </td>
+                        <td nz-td>{{data.task.status}}
+                            <nz-dropdown [nzTrigger]="'click'">
+                                <i class="anticon anticon-filter" nz-dropdown></i>
+                                <ul nz-menu>
+                                    <li nz-menu-item *ngFor="let status of statusList">
+                                        <span (click)="onClickStatus(data.task, status.name)">{{status.name}}</span>
+                                    </li>
+                                </ul>
+                            </nz-dropdown>
+                        </td>
+
+                        <td nz-td>{{data.task.executor}}
+                            <nz-dropdown [nzTrigger]="'click'">
+                                <i class="anticon anticon-filter" nz-dropdown></i>
+                                <ul nz-menu>
+                                    <li nz-menu-item *ngFor="let user of userList">
+                                        <span (click)="onClickExecutor(data.task, user)">{{user.username}}---{{user.alias}}</span>
+                                    </li>
+                                </ul>
+                            </nz-dropdown>
+                        </td>
+                        <td nz-td>{{data.task.checkinor}}
+                            <nz-dropdown [nzTrigger]="'click'">
+                                <i class="anticon anticon-filter" nz-dropdown></i>
+                                <ul nz-menu>
+                                    <li nz-menu-item *ngFor="let user of userList">
+                                        <span (click)="onClickCheckinor(data.task, user)">{{user.username}}---{{user.alias}}</span>
+                                    </li>
+                                </ul>
+                            </nz-dropdown>
+                        </td>
+
+                        <td nz-td *ngIf="!data.editFlag">
+                            <span>
+                                <nz-popconfirm [nzTitle]="'确定要删除这个任务吗？'" (nzOnConfirm)="confirmTask(data)" (nzOnCancel)="cancelTask()">
+                                    <a nz-popconfirm>删除</a>
+                                </nz-popconfirm>
+                            </span>
+                            <span nz-table-divider></span>
+                            <a (click)="showSubmitFile(data.task)" *ngIf="data.task.submitMovID">查看</a>
+                            <span nz-table-divider></span>
+                            <a (click)="editFrameList(data.task)">编辑</a>
+                        </td>
+                        <td nz-td *ngIf="data.editFlag">
+                            <a (click)="editFrameListOK(data.task)">确认</a>
+                            <span nz-table-divider></span>
+                            <a (click)="editFrameListCANCEL(data.task)">取消</a>
+                        </td>
+                    </tr>
+                    <tr nz-tbody-tr *ngIf="data.task.expand">
+                        <td nz-td></td>
+                        <td nz-td colspan="8">
+                            <div>IconURL: {{data.task.IconURL}}</div>
+                            <div>文件ID: {{data.task.fileID}}</div>
+                            <div>材质ID: {{data.task.textureFileID}}, movID: {{data.task.submitMovID}}</div>
+                            <div>引用资产：{{data.refString}}</div>
+                     </td>
+                 </tr>
+             </ng-template>
+             </tbody>
+         </nz-table>
+     </nz-card>
+ </div>
+</div>
+

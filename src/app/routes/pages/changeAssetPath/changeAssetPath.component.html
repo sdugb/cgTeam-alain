@@ -1,0 +1,33 @@
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzMd]="16">
+        <nz-card nzTitle="修改资产源路径">
+
+            <div class="steps-content">
+                <form nz-form [formGroup]="validateForm" >
+                    <div>
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+                                <label for="assetPath" nz-form-item-required>项目名称</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="16" [nzXs]="24">
+                                <nz-input [nzSize]="'large'" formControlName="assetPath" [nzId]="'assetPath'" [nzPlaceHolder]="'原路径'">
+                                </nz-input>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div>
+                <button nz-button [nzType]="'default'" (click)="onCancel()">
+                    <span>取消</span>
+                </button>
+                <button nz-button [nzType]="'default'" (click)="onSubmit()">
+                    <span>提交</span>
+                </button>
+            </div>
+
+        </nz-card>
+    </div>
+</div>
+

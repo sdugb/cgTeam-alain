@@ -1,0 +1,52 @@
+
+<div nz-row [nzGutter]="20">
+    <div nz-col [nzMd]="20">
+        <nz-card nzTitle="我的审验任务列表（总数：{{taskTotal}})">
+            <ng-template #extra>
+                <a (click)="onClickRefreshTask()">刷新</a>
+            </ng-template>
+            <nz-table #nzTable [nzDataSource]="taskList" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr>
+                    <th nz-th nzExpand></th>
+                    <th></th>
+                    <th nz-th><span>名称</span></th>
+                    <th nz-th><span>阶段</span></th>
+                    <th nz-th><span>状态</span></th>
+                    <th nz-th><span>审验人</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                <ng-template ngFor let-data [ngForOf]="taskList">
+                    <tr nz-tbody-tr>
+                        <td nz-td nzExpand>
+                            <nz-row-expand-icon [(nzExpand)]="data.expand"></nz-row-expand-icon>
+                        </td>
+                        <td nz-td>{{data.name}}</td>
+                        <td nz-td>{{data.stage}}</td>
+                        <td nz-td>{{data.status}}</td>
+                        <td nz-td>{{data.checkinor}}</td>
+                        <td nz-td>
+                            <span>
+                                <a (click)="showSubmitFile(data)">查看</a>
+                                <span nz-table-divider></span>
+                                <a (click)="onSubmitTask(data)">提交</a>
+                                <span nz-table-divider></span>
+                                <a (click)="onUnSubmitTask(data)">退回</a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr nz-tbody-tr *ngIf="data.expand">
+                        <td nz-td></td>
+                        <td nz-td colspan="4">
+                            <div>审验人: {{data.checkinor}}</div>
+                            <div>fileID: {{data.fileID}}, textureFileID: {{data.textureFileID}}</div>
+                        </td>
+                    </tr>
+                </ng-template>
+                </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+</div>
+

@@ -1,0 +1,143 @@
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzMd]="12">
+        <nz-card nzTitle="创建项目">
+
+            <nz-steps [(nzCurrent)]="current">
+                <nz-step [nzTitle]="'项目概述'"></nz-step>
+                <nz-step [nzTitle]="'项目配置'"></nz-step>
+                <nz-step [nzTitle]="'设置分辨率'"></nz-step>
+                <nz-step [nzTitle]="'完成'"></nz-step>
+            </nz-steps>
+
+            <div class="steps-content">
+                <form nz-form [formGroup]="validateForm" >
+                    <div *ngIf="index=='First-content'">
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="name" nz-form-item-required>项目名称</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzSize]="'large'" formControlName="name" [nzId]="'name'" [nzPlaceHolder]="'teamName'">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="alias" nz-form-item-required>项目别名</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzId]="'alias'" formControlName="alias" [(ngModel)]="alias" [nzPlaceHolder]="'新世界'">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="template" nz-form-item-required>流程模版</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-select style="width: 120px;" formControlName="template"  [(ngModel)]="template" [nzPlaceHolder]="'选择'" nzAllowClear>
+                                    <nz-option
+                                        *ngFor="let template of templateList"
+                                        [nzLabel]="template.name"
+                                        [nzValue]="template.name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="index=='Second-content'">
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>设计工具</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="designTool" [(ngModel)]="designTool" [nzSize]="'large'">
+                                    <nz-option
+                                        *ngFor="let name of designToolList"
+                                        [nzLabel]="name"
+                                        [nzValue]="name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+
+                        </div>
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>渲染器</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="render" [(ngModel)]="render" [nzSize]="'large'">
+                                    <nz-option
+                                        *ngFor="let name of renderList"
+                                        [nzLabel]="name"
+                                        [nzValue]="name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+
+                        </div>
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>时间单位</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="timeUnit" [(ngModel)]="timeUnit" [nzSize]="'large'">
+                                    <nz-option
+                                        *ngFor="let name of timeUnitList"
+                                        [nzLabel]="name"
+                                        [nzValue]="name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div *ngIf="index=='Third-content'">
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="xResolution" nz-form-item-required>横向分辨率</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzId]="'xResolution'" formControlName="xResolution" [(ngModel)]="xResolution" [nzPlaceHolder]="'1920'">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="yResolution" nz-form-item-required>纵向分辨率</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzId]="'yResolution'" formControlName="yResolution" [(ngModel)]="yResolution" [nzPlaceHolder]="'1280'">
+                                </nz-input>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="steps-action">
+                <button nz-button [nzType]="'default'" (click)="onCancel()">
+                    <span>取消</span>
+                </button>
+                <button nz-button [nzType]="'default'" (click)="pre()" *ngIf="current > 0">
+                    <span>上一步</span>
+                </button>
+                <button nz-button [nzType]="'default'" (click)="next()" *ngIf="current < 2">
+                    <span>下一步</span>
+                </button>
+                <button nz-button [nzType]="'primary'" (click)="onCreateProject()" *ngIf="current === 2">
+                    <span>完成</span>
+                </button>
+            </div>
+
+        </nz-card>
+    </div>
+</div>
+
+
+

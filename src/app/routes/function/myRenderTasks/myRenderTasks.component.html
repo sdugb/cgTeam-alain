@@ -1,0 +1,61 @@
+
+<div nz-row [nzGutter]="20">
+    <div nz-col [nzMd]="20">
+        <nz-card nzTitle="我的任务列表（总数：{{taskTotal}})">
+            <ng-template #extra>
+                <a (click)="onCreateRenderTasks()">创建任务</a>
+                <span nz-table-divider></span>
+                <a (click)="onClickRefreshTask()">刷新</a>
+            </ng-template>
+
+            <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr>
+                    <th nz-th nzExpand></th>
+                    <th></th>
+                    <th nz-th><span>名称</span></th>
+                    <th nz-th><span>阶段</span></th>
+                    <th nz-th><span>状态</span></th>
+                    <th nz-th><span>审验人</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                <ng-template ngFor let-data [ngForOf]="nzTable.data">
+                    <tr nz-tbody-tr>
+                        <nz-popover [nzPlacement]="'left'">
+                            <td nz-td nz-popover class="centered"><img src="{{data.IconURL}}" class="img-rounded" width="60" height="60">
+                                <ng-template #nzTemplate>
+                                    <img src="{{data.IconURL}}">
+                                </ng-template>
+                            </td>
+                        </nz-popover>
+                        <td nz-td nzExpand>
+                            <nz-row-expand-icon [(nzExpand)]="data.expand"></nz-row-expand-icon>
+                        </td>
+                        <td nz-td>{{data.name}}</td>
+                        <td nz-td>{{data.stage}}</td>
+                        <td nz-td>{{data.status}}</td>
+                        <td nz-td>{{data.checkinor}}</td>
+                        <td nz-td>
+                            <span>
+                                <a (click)="onSelectTeam(data)">查看</a>
+                                <span nz-table-divider></span>
+                                <a (click)="onSubmitTask(data)">提交</a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr nz-tbody-tr *ngIf="data.expand">
+                        <td nz-td></td>
+                        <td nz-td colspan="4">
+                            <div>审验人: {{data.checkinor}}</div>
+                            <div>资产ID: {{data.assetID}}</div>
+                            <div>材质ID: {{data.textureFolderID}}</div>
+                        </td>
+                    </tr>
+                </ng-template>
+                </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+</div>
+

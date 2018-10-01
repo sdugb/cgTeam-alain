@@ -1,0 +1,123 @@
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzMd]="12">
+        <nz-card nzTitle="{{title}}">
+
+            <nz-steps [(nzCurrent)]="current">
+                <nz-step [nzTitle]="'项目概述'"></nz-step>
+                <nz-step [nzTitle]="'项目配置'"></nz-step>
+                <nz-step [nzTitle]="'完成'"></nz-step>
+            </nz-steps>
+
+            <div class="steps-content">
+                <form nz-form [formGroup]="validateForm" >
+                    <div *ngIf="index=='First-content'">
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="name" nz-form-item-required>分包项目名称</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzSize]="'large'" formControlName="name" [nzId]="'name'" [nzPlaceHolder]="'teamName'">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="team" nz-form-item-required>团队名称</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-select style="width: 120px;" formControlName="team" [nzPlaceHolder]="'选择'" nzAllowClear>
+                                    <nz-option
+                                        *ngFor="let team of teamList"
+                                        [nzLabel]="team.alias"
+                                        [nzValue]="team.name"
+                                        [nzDisabled]="team.disabled">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="template" nz-form-item-required>流程模版</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-select style="width: 120px;" formControlName="template" [nzPlaceHolder]="'选择'" nzAllowClear>
+                                    <nz-option
+                                        *ngFor="let template of templateList"
+                                        [nzLabel]="template.name"
+                                        [nzValue]="template.name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="index=='Second-content'">
+                        <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="36">
+                                <label nz-form-item-required>媒体数据服务URL</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-input [nzSize]="'large'" formControlName="url" [nzId]="'url'" [nzPlaceHolder]="'http://'">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="user" nz-form-item-required>账户</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzSize]="'large'" formControlName="user" [nzId]="'user'" [nzPlaceHolder]="''">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="apiKey" nz-form-item-required>API Key</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzSize]="'large'" formControlName="apiKey" [nzId]="'apiKey'" [nzPlaceHolder]="''">
+                                </nz-input>
+                            </div>
+
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="uploadURL" nz-form-item-required>上载路径</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzSize]="'large'" formControlName="uploadURL" [nzId]="'uploadURL'" [nzPlaceHolder]="''">
+                                </nz-input>
+                            </div>
+
+                        </div>
+                   </div>
+
+               </form>
+           </div>
+           <div class="steps-action">
+               <button nz-button [nzType]="'default'" (click)="onCancel()">
+                   <span>取消</span>
+               </button>
+               <button nz-button [nzType]="'default'" (click)="pre()" *ngIf="current > 0">
+                   <span>上一步</span>
+               </button>
+               <button nz-button [nzType]="'default'" (click)="next()" *ngIf="current < 2">
+                   <span>下一步</span>
+               </button>
+               <button nz-button [nzType]="'primary'" (click)="onTest()" *ngIf="current === 0">
+                   <span>测试</span>
+               </button>
+               <button nz-button [nzType]="'primary'" (click)="onCreateSubProject()" *ngIf="current === 2">
+                   <span>完成</span>
+               </button>
+           </div>
+       </nz-card>
+   </div>
+</div>

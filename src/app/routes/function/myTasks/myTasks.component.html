@@ -1,0 +1,81 @@
+
+<div nz-row [nzGutter]="20">
+    <div nz-col [nzMd]="20">
+        <nz-card nzTitle="我的任务列表（总数：{{taskTotal}})">
+            <ng-template #extra>
+                <a (click)="onClickRefreshTask()">刷新</a>
+            </ng-template>
+
+            <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr >
+                    <th nz-th nzExpand></th>
+                    <th></th>
+                    <th nz-th><span>名称</span></th>
+                    <th nz-th><span>阶段</span></th>
+                    <th nz-th><span>帧序列</span></th>
+                    <th nz-th><span>状态</span></th>
+                    <th nz-th><span>审验人</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                <ng-template ngFor let-data [ngForOf]="nzTable.data">
+                    <tr nz-tbody-tr>
+                        <nz-popover [nzPlacement]="'left'">
+                            <td nz-td nz-popover class="centered"><img src="{{data.IconURL}}" class="img-rounded" width="60" height="60">
+                                <ng-template #nzTemplate>
+                                    <img src="{{data.IconURL}}">
+                                </ng-template>
+                            </td>
+                        </nz-popover>
+                        <td nz-td nzExpand>
+                            <nz-row-expand-icon (click)="onClickExpandTask(data)"></nz-row-expand-icon>
+                        </td>
+                        <td nz-td>{{data.name}}</td>
+                        <td nz-td>{{data.stage}}</td>
+                        <td>
+                            <ng-container *ngIf="!data.editFlag">
+                                {{data.frameList}}
+                            </ng-container>
+                            <ng-container *ngIf="data.editFlag">
+                                <input type="text" nz-input [(ngModel)]="data.frameList">
+                            </ng-container>
+                        </td>
+                        <td nz-td>{{data.status}}</td>
+                        <td nz-td>{{data.checkinor}}</td>
+                        <td nz-td *ngIf="data.stage !== '渲染'">
+                            <span>
+                                <a (click)="onSelectTeam(data)">查看</a>
+                                <span nz-table-divider></span>
+                                <a (click)="onSubmitTask(data)">提交</a>
+                            </span>
+                        </td>
+                        <td nz-td *ngIf="data.stage === '渲染' && !data.editFlag">
+                            <span>
+                                <a (click)="onSelectTeam(data)">查看</a>
+                                <span nz-table-divider></span>
+                                <a (click)="onSubmitTask(data)">提交</a>
+                                <span nz-table-divider></span>
+                                <a (click)="editFrameList(data)">编辑</a>
+                            </span>
+                        </td>
+                        <td nz-td *ngIf="data.editFlag">
+                            <a (click)="editFrameListOK(data)">确认</a>
+                            <span nz-table-divider></span>
+                            <a (click)="editFrameListCANCEL(data)">取消</a>
+                        </td>
+                    </tr>
+                    <tr nz-tbody-tr *ngIf="data.expand">
+                        <td nz-td></td>
+                        <td nz-td colspan="4">
+                            <div>审验人: {{data.checkinor}}</div>
+                            <div>资产ID: {{data.fileID}}, 材质ID: {{data.textureFileID}}</div>
+                        </td>
+                    </tr>
+                </ng-template>
+                </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+</div>
+

@@ -1,0 +1,175 @@
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzMd]="12">
+        <nz-card nzTitle="创建任务">
+
+            <nz-steps [(nzCurrent)]="current">
+                <nz-step [nzTitle]="'任务概述'"></nz-step>
+                <nz-step [nzTitle]="'任务属性'"></nz-step>
+                <nz-step [nzTitle]="'任务配置'"></nz-step>
+                <nz-step [nzTitle]="'完成'"></nz-step>
+            </nz-steps>
+
+            <div class="steps-content">
+                <form nz-form [formGroup]="validateForm" >
+                    <div *ngIf="index=='First-content'">
+                        <div nz-form-item nz-row>
+
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="projectName" nz-form-item-required>项目名称</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzSize]="'large'" formControlName="projectName" [(ngModel)]="projectName" [nzPlaceHolder]="''">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="name" nz-form-item-required>任务名称</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzId]="'name'" formControlName="name" [(ngModel)]="name" [nzPlaceHolder]="''">
+                                </nz-input>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>任务难度</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="diffcult" [(ngModel)]="diffcult" [nzSize]="'large'" [nzPlaceHolder]="''">
+                                    <nz-option
+                                        *ngFor="let name of diffcultList"
+                                        [nzLabel]="name"
+                                        [nzValue]="name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="index=='Second-content'">
+                        <div nz-form-item nz-row>
+
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>任务阶段</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="stage" [(ngModel)]="stage" [nzSize]="'large'" [nzPlaceHolder]="''">
+                                    <nz-option
+                                        *ngFor="let name of stageList"
+                                        [nzLabel]="name"
+                                        [nzValue]="name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row *ngIf="modelFlag">
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>资产类别</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="modelClass" [(ngModel)]="modelClass" [nzSize]="'large'" [nzPlaceHolder]="''">
+                                    <nz-option
+                                        *ngFor="let name of classList"
+                                        [nzLabel]="name"
+                                        [nzValue]="name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row *ngIf="modelFlag">
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>是否绑定</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-switch formControlName="modelType" [(ngModel)]="modelType"></nz-switch>
+                            </div>
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="path" nz-form-item-required>原资产路径</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-input [nzId]="'assetPath'" formControlName="assetPath" [(ngModel)]="assetPath" [nzPlaceHolder]="''">
+                                </nz-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="index=='Third-content'">
+                        <div nz-form-item nz-row>
+
+                        </div>
+
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>执行人</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="executor" [(ngModel)]="executor" [nzSize]="'large'" [nzPlaceHolder]="''">
+                                    <nz-option
+                                        *ngFor="let user of userList"
+                                        [nzLabel]="user.alias"
+                                        [nzValue]="user.username">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label nz-form-item-required>审验人</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]="14">
+                                <nz-select formControlName="checkinor" [(ngModel)]="checkinor" [nzSize]="'large'" [nzPlaceHolder]="''">
+                                    <nz-option
+                                        *ngFor="let user of userList"
+                                        [nzLabel]="user.alias"
+                                        [nzValue]="user.username">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                                <label for="_dateRange" nz-form-item-required>制作时间</label>
+                            </div>
+                            <div nz-col [nzSm]="14" [nzXs]="24">
+                                <nz-rangepicker formControlName="_dateRange" [(ngModel)]="_dateRange"
+                                                [nzPlaceholder]="['选择开始时间', '选择结束时间']">
+                                </nz-rangepicker>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="steps-action">
+                <button nz-button [nzType]="'default'" (click)="onCancel()">
+                    <span>取消</span>
+                </button>
+                <button nz-button [nzType]="'default'" (click)="pre()" *ngIf="current > 0">
+                    <span>上一步</span>
+                </button>
+                <button nz-button [nzType]="'default'" (click)="next()" *ngIf="current < 2">
+                    <span>下一步</span>
+                </button>
+                <button nz-button [nzType]="'primary'" (click)="onCreateTask()" *ngIf="current === 2">
+                    <span>完成</span>
+                </button>
+            </div>
+        </nz-card>
+    </div>
+</div>
+
+

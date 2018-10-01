@@ -1,0 +1,23 @@
+<desc-list size="large">
+    <li *ngFor="let video of videoList">
+        <desc-list-item>
+            <div>{{video.name1}}</div>
+            <video src="{{video.submitFile1}}" controls="controls" width=400 height=200>
+            </video>
+
+        </desc-list-item>
+        <desc-list-item>
+            <div>{{video.name2}}</div>
+            <video src="{{video.submitFile2}}" controls="controls" width=400 height=200>
+            </video>
+
+        </desc-list-item>
+        <desc-list-item>
+            <div>{{video.name3}}</div>
+            <video src="{{video.submitFile3}}" controls="controls" width=400 height=200>
+            </video>
+
+        </desc-list-item>
+    </li>
+
+</desc-list>

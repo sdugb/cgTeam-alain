@@ -1,0 +1,114 @@
+
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzMd]="16">
+        <nz-card nzTitle="我的团队成员列表（总数：{{memberTotal}})">
+            <ng-template #extra>
+                <a (click)="onClickAddMember()">加入成员</a>
+                <span nz-table-divider></span>
+                <a (click)="onClickRefreshMember()">刷新</a>
+                <span nz-table-divider></span>
+                <label nz-checkbox [(ngModel)]="allMemberChecked" (click)="onClickMemberChecked()">全部</label>
+            </ng-template>
+            <nz-table [nzDataSource]="memberList" [nzPageSize]="10">
+                <thead nz-thead>
+                <tr>
+                    <th nz-th><span>名称</span></th>
+                    <th nz-th><span>别名</span></th>
+                    <th nz-th><span>角色</span></th>
+                    <th nz-th><span>动作</span></th>
+                </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <ng-template ngFor let-data [ngForOf]="memberList">
+                    <tr>
+                        <td nz-td *ngIf="!data.addFlag">
+                            <a>{{data.username}}</a>
+                        </td>
+                        <td nz-td *ngIf="data.addFlag">
+                            <nz-input [(ngModel)]="data.username"></nz-input>
+                        </td>
+                        <td nz-td *ngIf="data.editFlag || data.addFlag">
+                            <nz-input [(ngModel)]="data.alias"></nz-input>
+                        </td>
+                        <td nz-td *ngIf="!data.editFlag && !data.addFlag">
+                            {{data.alias}}
+                        </td>
+                        <td nz-td *ngIf="data.role=='manager' || data.role=='designer'">{{data.roleAlias}}
+                            <nz-dropdown [nzTrigger]="'click'">
+                                <i class="anticon anticon-filter" nz-dropdown></i>
+                                <ul nz-menu>
+                                    <li nz-menu-item *ngFor="let role of roleList">
+                                        <span (click)="onClickRole(data, role)">{{role.name}}</span>
+                                    </li>
+                                </ul>
+                            </nz-dropdown>
+                        </td>
+                        <td nz-td *ngIf="data.role=='admin'">{{data.roleAlias}}
+                        </td>
+
+                        <td nz-td *ngIf="!data.editFlag && !data.addFlag">
+                            <a *ngIf="!data.enable" (click)="onActivateMember(data)">激活</a>
+                            <a *ngIf="data.enable" (click)="onUnActivateMember(data)">冻结</a>
+                            <span nz-table-divider></span>
+                            <a (click)="onEidt(data)">编辑</a>
+                        </td>
+
+                        <td nz-td *ngIf="data.editFlag || data.addFlag">
+                            <a (click)="onOk(data)">确认</a>
+                            <span nz-table-divider></span>
+                            <a (click)="onCancel(data)">取消</a>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                    <!---
+                    <tr nz-tbody-tr *ngFor="let data of nzMemberTable.data">
+                        <td nz-td>
+                            <a>{{data.username}}</a>
+                        </td>
+                        <td nz-td *ngIf="data.editFlag">
+                            <nz-input [(ngModel)]="data.alias"></nz-input>
+                        </td>
+                        <td nz-td *ngIf="!data.editFlag">
+                            {{data.alias}}
+                        </td>
+                        <td nz-td>{{data.roleAlias}}
+                            <nz-dropdown [nzTrigger]="'click'">
+                                <i class="anticon anticon-filter" nz-dropdown></i>
+                                <ul nz-menu>
+                                    <li nz-menu-item *ngFor="let role of roleList">
+                                        <span (click)="onClickRole(data, role)">{{role.name}}</span>
+                                    </li>
+                                </ul>
+                            </nz-dropdown>
+                        </td>
+                        <td nz-td>{{data.isVerified}}
+                        <nz-dropdown [nzTrigger]="'click'">
+                            <i class="anticon anticon-filter" nz-dropdown></i>
+                            <ul nz-menu>
+                                <li nz-menu-item *ngFor="let status of statusList">
+                                    <span (click)="onClickStatus(data, status)">{{status.name}}</span>
+                                </li>
+                            </ul>
+                        </nz-dropdown>
+                        </td>
+                        <td nz-td>
+                            <span>
+                                <nz-popconfirm [nzTitle]="'确定要删除这个成员吗？'" (nzOnConfirm)="confirmMember(data)" (nzOnCancel)="cancelMemeber()">
+                                    <a nz-popconfirm>删除</a>
+                                </nz-popconfirm>
+                                <span nz-table-divider></span>
+                                <a *ngIf="!data.editFlag" (click)="onEidt(data)">编辑</a>
+                                <a *ngIf="data.editFlag" (click)="onModify(data)">修改</a>
+                                <span *ngIf="data.editFlag" nz-table-divider></span>
+                                <a *ngIf="data.editFlag" (click)="onEidt(data)">取消</a>
+                            </span>
+                        </td>
+                    </tr>
+
+                           -->
+                </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+</div>
