@@ -1,4 +1,4 @@
-# cgPortal-alain
+# cgTeam-alain
 
 cgTeam应用服务器的前端
 
